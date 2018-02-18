@@ -11,6 +11,7 @@ class App extends Component {
           <h1 className="App-title">Click Counter</h1>
         </header>
         <ClickCounter />
+        <KeyLogger />
       </div>
     );
   }
@@ -53,4 +54,36 @@ class ClickCounter extends Component {
   
   }
 }
+
+class KeyLogger extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      letters: []
+    };
+  }
+
+  componentWillMount(){
+    document.addEventListener("keyup", this.handleKeyUp.bind(this));
+  }
+
+  handleKeyUp(e) {
+    var newStateArray = this.state.letters.slice();
+    newStateArray.push(e.key);
+    this.setState({
+      key: e.key,
+      letters: newStateArray
+    })
+  }
+
+  render(){
+    return(
+      <div>
+        {this.state.key}
+        <p>Log: {this.state.letters}</p>
+      </div>
+    );
+  }
+}
+
 export default App;
